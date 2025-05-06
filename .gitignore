@@ -1,0 +1,22 @@
+# Arquivos de ambiente
+config.env
+.env
+
+# Arquivos temporários
+__pycache__/
+*.py[cod]
+*$py.class
+temp_image.jpg
+detection_result.jpg
+
+# Arquivos de modelo YOLO baixados
+*.pt
+
+# Arquivos do ambiente virtual
+venv/
+env/
+ENV/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db 
