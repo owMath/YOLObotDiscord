@@ -14,9 +14,68 @@ import threading
 
 # Adicionar classes seguras para o PyTorch 2.6
 try:
-    from ultralytics.nn.tasks import DetectionModel
+    from ultralytics.nn.tasks import DetectionModel, BaseModel, ClassificationModel, SegmentationModel, PoseModel, OBBModel, RTDETRDetectionModel
+    from ultralytics.nn.modules import Conv, C2f, SPPF, Detect, AIFI, Bottleneck, BottleneckCSP, C1, C2, C3, C3Ghost, C3TR, C3x, CBAM, ChannelAttention, Classify, Concat, Conv2, ConvTranspose, DFL, DWConv, DWConvTranspose2d, Focus, GhostBottleneck, GhostConv, HGBlock, HGStem, LayerNorm2d, LightConv, MLP, MLPBlock, OBB, Pose, Proto, RTDETRDecoder, TransformerLayer
     import torch.serialization
-    torch.serialization.add_safe_globals([DetectionModel])
+    import torch.nn.modules.container
+    import ultralytics.nn.modules
+    import ultralytics.nn.tasks
+    
+    # Lista de classes que sabemos que existem
+    safe_classes = [
+        # Classes principais
+        DetectionModel,
+        BaseModel,
+        ClassificationModel,
+        SegmentationModel,
+        PoseModel,
+        OBBModel,
+        RTDETRDetectionModel,
+        
+        # Classes de módulos
+        Conv,
+        C2f,
+        SPPF,
+        Detect,
+        AIFI,
+        Bottleneck,
+        BottleneckCSP,
+        C1,
+        C2,
+        C3,
+        C3Ghost,
+        C3TR,
+        C3x,
+        CBAM,
+        ChannelAttention,
+        Classify,
+        Concat,
+        Conv2,
+        ConvTranspose,
+        DFL,
+        DWConv,
+        DWConvTranspose2d,
+        Focus,
+        GhostBottleneck,
+        GhostConv,
+        HGBlock,
+        HGStem,
+        LayerNorm2d,
+        LightConv,
+        MLP,
+        MLPBlock,
+        OBB,
+        Pose,
+        Proto,
+        RTDETRDecoder,
+        TransformerLayer,
+        
+        # Classes do PyTorch
+        torch.nn.modules.container.Sequential
+    ]
+    
+    torch.serialization.add_safe_globals(safe_classes)
+    print(f"Classes seguras adicionadas com sucesso! ({len(safe_classes)} classes)")
 except Exception as e:
     print(f"Aviso: Não foi possível adicionar classes seguras: {str(e)}")
 
@@ -568,7 +627,7 @@ async def detect(ctx):
 async def ajuda(ctx):
     """Exibe informações de ajuda sobre o bot"""
     help_text = """
-**Bot de Detecção YOLO v2.0**
+**Teste Bot de Detecção YOLO**
 
 **Comandos disponíveis:**
 `!detect` - Anexe uma imagem com este comando para detectar objetos nela
@@ -655,4 +714,4 @@ if __name__ == "__main__":
     if token:
         bot.run(token)
     else:
-        print("Token do Discord não encontrado. Verifique seu arquivo config.env") 
+        print("Token do Discord não encontrado. Verifique seu arquivo config.env")
